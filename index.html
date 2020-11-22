@@ -3,10 +3,22 @@
     <h1>Welcome to my homepage!</h1>  
     <p>Counter: <span id="counter"></span></p>  
     <button id="increase">Increase Counter</button>  
-    <script>    
-      const setCounter = (counter_value) => {      document.querySelector('#counter').innerHTML = counter_value;    };
-      const api = 'https://foxgd34eni.execute-api.us-east-1.amazonaws.com';    fetch(api + '/v1')      .then(res => res.json())      .then(result => setCounter(result.counter));
-      document.querySelector('#increase')      .addEventListener('click', () => {        fetch(api + '/counter/increase', { method: 'POST' })          .then(res => res.json())          .then(result => setCounter(result.counter));        }      );  
-    </script>
+    <script>
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('GET', 'https://foxgd34eni.execute-api.us-east-1.amazonaws.com/v1', true);
+
+    xhr.onload = function () {
+      if (xhr.readyState === xhr.DONE) {
+        if (xhr.status === 200) {
+          document.getElementById("counter").innerHTML = '&nbsp;&nbsp;' + xhr.responseText + ' views&nbsp;&nbsp;';
+
+        }
+      }
+    };
+
+    xhr.send(null);
+  </script>
+    <div id="counter" class="bg-primary text-white p2">&nbsp;&nbsp;118 views&nbsp;&nbsp;</div>
   </body>
 </html>
